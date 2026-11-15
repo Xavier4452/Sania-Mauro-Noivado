@@ -1,0 +1,868 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    background: #050505;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at top, #29200d 0%, #0b0b0b 45%, #000 100%);
+    color: #f5e6b8;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    min-height: 100vh;
+    margin: auto;
+    padding: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+/* PARTÍCULAS */
+
+.particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+
+    background-image:
+        radial-gradient(circle, #d4af3766 1px, transparent 2px),
+        radial-gradient(circle, #f5e6b844 1px, transparent 2px);
+
+    background-size: 90px 100px, 140px 150px;
+    background-position: 0 0, 40px 60px;
+
+    animation: particlesMove 15s linear infinite;
+}
+
+@keyframes particlesMove {
+    from {
+        background-position: 0 0, 40px 60px;
+    }
+
+    to {
+        background-position: 0 -300px, 40px -240px;
+    }
+}
+
+/* PARTÍCULAS DINÂMICAS */
+
+.gold-particle {
+    position: absolute;
+    bottom: -15px;
+    width: var(--particle-size);
+    height: var(--particle-size);
+    background: #d4af37;
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 6px #d4af37,
+        0 0 14px rgba(212, 175, 55, 0.8);
+
+    opacity: 0;
+    animation: goldFloat linear infinite;
+}
+
+@keyframes goldFloat {
+    0% {
+        transform: translateY(0) scale(.5);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: .9;
+    }
+
+    80% {
+        opacity: .7;
+    }
+
+    100% {
+        transform: translateY(-110vh) scale(1.3);
+        opacity: 0;
+    }
+}
+
+/* ENVELOPE */
+
+.envelope {
+    min-height: 100vh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 45px;
+    perspective: 1600px;
+
+    transition: opacity 1s ease;
+}
+
+.envelope-scene {
+    width: 100%;
+    max-width: 360px;
+
+    perspective: 1600px;
+    filter: drop-shadow(0 25px 25px #000);
+}
+
+/* CORPO PRINCIPAL */
+
+.envelope-card {
+    position: relative;
+
+    width: 100%;
+    height: 245px;
+
+    background: #090909;
+
+    border: 1px solid #d4af37;
+
+    box-shadow:
+        0 0 2px #f5d77d,
+        0 0 25px #d4af3733,
+        0 25px 55px #000;
+
+    transform-style: preserve-3d;
+
+    overflow: visible;
+
+    animation: envelopeAppear 2s ease;
+}
+
+/* PARTE TRASEIRA */
+
+.envelope-back {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(145deg, #292929, #090909 60%, #17120a);
+
+    border: 1px solid #b38b25;
+
+    transform: translateZ(-3px);
+}
+
+/* CARTA INTERIOR */
+
+.letter-preview {
+    position: absolute;
+
+    width: 88%;
+    height: 205px;
+
+    left: 6%;
+    top: 18px;
+
+    background:
+        linear-gradient(135deg, #fff0bb, #e3c77c 45%, #c49a40);
+
+    color: #17120a;
+
+    text-align: center;
+
+    padding: 27px 10px;
+
+    z-index: 2;
+
+    box-shadow:
+        0 5px 18px #0008,
+        inset 0 0 15px #fff7c0;
+
+    transition:
+        transform 1.8s cubic-bezier(.2,.8,.2,1),
+        box-shadow 1.5s ease;
+}
+
+.letter-preview span {
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.letter-preview h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 55px;
+    margin: 15px 0;
+}
+
+.letter-preview small {
+    font-size: 25px;
+}
+
+.letter-preview p {
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.letter-decoration {
+    margin-top: 12px;
+    color: #927022;
+    font-size: 16px;
+}
+
+/* DOBRAS LATERAIS */
+
+.side-fold {
+    position: absolute;
+    inset: 0;
+
+    z-index: 3;
+
+    pointer-events: none;
+}
+
+.left-fold {
+    background:
+        linear-gradient(135deg, #292929, #080808);
+
+    clip-path: polygon(
+        0 0,
+        50% 50%,
+        0 100%
+    );
+}
+
+.right-fold {
+    background:
+        linear-gradient(225deg, #303030, #080808);
+
+    clip-path: polygon(
+        100% 0,
+        50% 50%,
+        100% 100%
+    );
+}
+
+/* DOBRA INFERIOR */
+
+.bottom-fold {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(0deg, #050505, #262626);
+
+    clip-path: polygon(
+        0 100%,
+        50% 48%,
+        100% 100%
+    );
+
+    z-index: 3;
+
+    pointer-events: none;
+}
+
+/* FRENTE DO ENVELOPE */
+
+.envelope-front {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(145deg, #191919, #050505);
+
+    clip-path: polygon(
+        0 0,
+        50% 58%,
+        100% 0,
+        100% 100%,
+        0 100%
+    );
+
+    border: 1px solid #d4af37;
+
+    z-index: 4;
+
+    pointer-events: none;
+}
+
+/* ABA SUPERIOR */
+
+.envelope-flap {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #75591c,
+            #f5d77d 45%,
+            #b38b25 75%,
+            #684b12
+        );
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 65%
+    );
+
+    transform-origin: top center;
+
+    transform: rotateX(0deg);
+
+    transition:
+        transform 1.6s cubic-bezier(.2,.7,.2,1);
+
+    z-index: 6;
+
+    backface-visibility: visible;
+
+    filter: drop-shadow(0 5px 8px #0008);
+}
+
+/* SELO DOURADO */
+
+.wax-seal {
+    position: absolute;
+
+    width: 72px;
+    height: 72px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #fff0b0,
+            #e5bf58 35%,
+            #bd8d27 68%,
+            #75500e
+        );
+
+    color: #241600;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23px;
+    font-weight: bold;
+
+    border: 2px solid #f5d77d;
+
+    box-shadow:
+        0 0 8px #fff0a0,
+        0 0 20px #d4af3788,
+        inset 0 0 8px #fff6cf;
+
+    left: 50%;
+    top: 77%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 7;
+
+    transition:
+        opacity .6s ease,
+        transform .8s ease,
+        filter .6s ease;
+}
+
+.wax-seal span {
+    font-size: 13px;
+    margin: 0 2px;
+}
+
+/* ABERTURA 3D */
+
+.envelope-card.opened .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+.envelope-card.opened .wax-seal {
+    opacity: 0;
+
+    filter: blur(8px);
+
+    transform:
+        translate(-50%, -50%)
+        scale(1.8)
+        rotate(25deg);
+}
+
+.envelope-card.opened .letter-preview {
+    transform:
+        translateY(-155px)
+        translateZ(35px)
+        scale(1.04);
+
+    box-shadow:
+        0 15px 35px #000b,
+        0 0 20px #d4af3744;
+    
+    transition-delay: .65s;
+}
+
+/* BRILHO DO ENVELOPE */
+
+.envelope-card::after {
+    content: "";
+
+    position: absolute;
+    inset: -2px;
+
+    border: 1px solid #d4af3744;
+
+    box-shadow: 0 0 30px #d4af3722;
+
+    pointer-events: none;
+
+    z-index: 8;
+}
+
+/* BOTÃO ABRIR */
+
+#openButton {
+    position: relative;
+    z-index: 10;
+
+    margin-top: 10px;
+
+    padding: 18px 32px;
+
+    border: 1px solid #f5d77d;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #f5e6b8,
+            #b38b25
+        );
+
+    color: #080808;
+
+    font-weight: 600;
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    animation: goldPulse 2s infinite;
+}
+
+#openButton span {
+    margin-left: 8px;
+}
+
+@keyframes goldPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 transparent;
+    }
+
+    50% {
+        box-shadow: 0 0 25px #d4af3788;
+    }
+}
+
+/* CONVITE PRINCIPAL */
+
+.invitation {
+    display: none;
+
+    min-height: 100vh;
+
+    text-align: center;
+
+    padding: 60px 15px;
+
+    background:
+        radial-gradient(
+            ellipse at top,
+            #241b0b 0%,
+            #090909 50%,
+            #000 100%
+        );
+
+    color: #f5e6b8;
+
+    animation: fadeIn 2s ease;
+}
+
+.subtitle {
+    color: #d4af37;
+    letter-spacing: 5px;
+    font-size: 10px;
+}
+
+.invitation h2 {
+    font-family: 'Cormorant Garamond', serif;
+    color: #f5e6b8;
+
+    font-size: 39px;
+    font-weight: 400;
+
+    margin-top: 35px;
+    line-height: 1.2;
+}
+
+.ornament {
+    color: #d4af37;
+    font-size: 30px;
+    margin: 30px;
+}
+
+.intro {
+    color: #aaa;
+
+    font-size: 13px;
+    line-height: 2;
+
+    max-width: 350px;
+    margin: auto;
+}
+
+.names {
+    font-family: 'Cormorant Garamond', serif;
+
+    color: #d4af37;
+
+    font-size: 55px;
+    font-weight: 400;
+
+    margin-top: 45px;
+}
+
+.names span {
+    color: #fff;
+    font-style: italic;
+}
+
+.event-name {
+    color: #d4af37;
+
+    letter-spacing: 6px;
+    font-size: 11px;
+
+    margin-top: 15px;
+}
+
+.gold-line {
+    width: 90px;
+    height: 1px;
+
+    background: #d4af37;
+
+    margin: 25px auto;
+
+    box-shadow: 0 0 10px #d4af37;
+}
+
+/* DATA E LOCAL */
+
+.details {
+    display: flex;
+    justify-content: space-around;
+
+    gap: 15px;
+    margin: 45px 0;
+}
+
+.details span,
+.timer span {
+    display: block;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    color: #999;
+    margin-bottom: 12px;
+}
+
+.details h3 {
+    font-family: 'Cormorant Garamond', serif;
+
+    color: #e8c65a;
+
+    font-size: 20px;
+    font-weight: 400;
+}
+
+/* CONTAGEM REGRESSIVA */
+
+.countdown {
+    border-top: 1px solid #d4af3744;
+    border-bottom: 1px solid #d4af3744;
+
+    padding: 30px 0;
+    margin-top: 35px;
+}
+
+.countdown h3 {
+    color: #d4af37;
+
+    font-size: 10px;
+    letter-spacing: 4px;
+
+    margin-bottom: 30px;
+}
+
+.timer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.timer strong {
+    display: block;
+
+    font-family: 'Cormorant Garamond', serif;
+
+    color: #e8c65a;
+
+    font-size: 34px;
+    font-weight: 400;
+}
+
+/* WHATSAPP */
+
+.whatsapp-button {
+    display: inline-block;
+
+    margin-top: 45px;
+    padding: 17px 25px;
+
+    border: 1px solid #d4af37;
+
+    background:
+        linear-gradient(135deg, #d4af37, #f5e6b8);
+
+    color: #080808;
+
+    text-decoration: none;
+
+    font-size: 10px;
+    letter-spacing: 3px;
+
+    transition: .4s;
+}
+
+.whatsapp-button:hover {
+    box-shadow: 0 0 25px #d4af3766;
+}
+
+.whatsapp-button span {
+    margin-left: 12px;
+}
+
+/* MENSAGEM FINAL */
+
+.closing {
+    color: #aaa;
+
+    margin-top: 50px;
+
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+}
+
+.signature {
+    color: #aaa;
+
+    margin-top: 30px;
+
+    line-height: 2;
+    font-size: 12px;
+}
+
+.signature strong {
+    color: #d4af37;
+
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 27px;
+}
+
+/* ANIMAÇÕES */
+
+@keyframes envelopeAppear {
+    from {
+        opacity: 0;
+        transform: translateY(35px) rotateX(8deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* REVELAÇÃO DOS NOMES */
+
+.invitation h1 {
+    animation:
+        revealNames 2.5s ease-out both,
+        goldenGlow 3s ease-in-out 2.5s infinite alternate;
+}
+
+@keyframes revealNames {
+    0% {
+        opacity: 0;
+        transform: scale(.75) translateY(35px);
+        filter: blur(12px);
+        letter-spacing: 12px;
+    }
+
+    60% {
+        opacity: .8;
+        filter: blur(2px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+        letter-spacing: normal;
+    }
+}
+
+@keyframes goldenGlow {
+    from {
+        text-shadow: 0 0 8px #d4af37;
+    }
+
+    to {
+        text-shadow:
+            0 0 15px #d4af37,
+            0 0 35px #d4af3788;
+    }
+}
+
+/* TELEMÓVEIS */
+
+@media (max-width: 400px) {
+
+    .container {
+        padding: 15px;
+    }
+
+    .envelope-card {
+        height: 220px;
+    }
+
+    .letter-preview {
+        height: 185px;
+    }
+
+    .names {
+        font-size: 45px;
+    }
+
+    .invitation h2 {
+        font-size: 34px;
+    }
+
+    .timer strong {
+        font-size: 29px;
+    }
+
+}
+/* EFEITO CINEMATOGRÁFICO DE QUEBRA DO SELO */
+
+.wax-seal {
+    overflow: visible;
+}
+
+/* Fissuras douradas */
+.wax-seal::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: 50%;
+
+    background:
+        linear-gradient(45deg,
+            transparent 47%,
+            #fff4bd 48%,
+            transparent 50%),
+        linear-gradient(125deg,
+            transparent 47%,
+            #fff4bd 48%,
+            transparent 50%),
+        linear-gradient(85deg,
+            transparent 47%,
+            #fff4bd 48%,
+            transparent 50%);
+
+    opacity: 0;
+}
+
+/* Explosão de luz */
+.wax-seal::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+
+    border: 2px solid #ffe7a0;
+    border-radius: 50%;
+
+    opacity: 0;
+    transform: scale(.7);
+}
+
+/* Quebra do selo */
+.envelope-card.opened .wax-seal::before {
+    opacity: 1;
+    animation: sealCrack .40s ease forwards;
+}
+
+.envelope-card.opened .wax-seal::after {
+    animation: sealBurst .10s ease forwards;
+}
+
+.envelope-card.opened .wax-seal {
+    transition-delay: .5s;
+}
+
+@keyframes sealCrack {
+    0% {
+        opacity: 0;
+        transform: scale(.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes sealBurst {
+    0% {
+        opacity: .9;
+        transform: scale(.7);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(2.2);
+    }
+}
